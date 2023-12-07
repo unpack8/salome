@@ -1,0 +1,101 @@
+{
+  "history": {
+    "cases": [
+      {
+        "name": "KirshBadMesh",
+        "stages": [
+          1
+        ],
+        "baseFolder": "KirshBadMesh"
+      },
+      {
+        "name": "KirshGoodMesh",
+        "stages": [
+          2
+        ],
+        "baseFolder": "KirshGoodMesh"
+      },
+      {
+        "name": "CurrentCase",
+        "stages": [
+          2
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "name": "Stage_1",
+        "text": "mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=20)\n\nmodel = AFFE_MODELE(AFFE=_F(MODELISATION=('D_PLAN', ), PHENOMENE='MECANIQUE', TOUT='OUI'), MAILLAGE=mesh)\n\nmater = DEFI_MATERIAU(ELAS=_F(E=210000.0, NU=0.3))\n\nmaterfl = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ), TOUT='OUI'), MODELE=model)\n\nmecabc = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0, DY=0.0, GROUP_MA=('Fixed', )), MODELE=model)\n\nmecach = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load', ), PRES=-100.0))\n\nresult = MECA_STATIQUE(CHAM_MATER=materfl, EXCIT=(_F(CHARGE=mecabc), _F(CHARGE=mecach)), MODELE=model)\n\nresult = CALC_CHAMP(reuse=result, CRITERES=('SIEQ_ELGA', 'SIEQ_ELNO', 'SIEQ_NOEU'), DEFORMATION=('EPSI_ELGA', 'EPSI_ELNO', 'EPSI_NOEU'), RESULTAT=result)\n\nIMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=result), UNITE=80)",
+        "files": [
+          {
+            "handle": 20,
+            "filename": "0:1:2:6",
+            "attr": 1
+          },
+          {
+            "handle": 80,
+            "filename": "/home/unpack/salome_meca/Projects/Kurs/Linear/resKirshBad.rmed",
+            "attr": 2
+          }
+        ],
+        "result": {
+          "job": {
+            "jobid": "0",
+            "mode": "Interactive",
+            "name": "KirshBadMesh_Stage_1",
+            "server": "localhost",
+            "memory": 2048,
+            "time": "00:15:00",
+            "version": "stable",
+            "startTime": "\u0427\u0442 30 \u043d\u043e\u044f 2023 21:37:13",
+            "endTime": "\u0427\u0442 30 \u043d\u043e\u044f 2023 21:37:20",
+            "folder": "/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files",
+            "wckey": "P10WB:ASTER",
+            "dumpString": "<?xml version=\"1.0\"?>\n<!--SALOME Launcher job-->\n<jobs>\n  <job type=\"command_salome\" name=\"KirshBadMesh_Stage_1\">\n    <user_part>\n      <job_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files/KirshBadMesh/Result-Stage_1/launcher_script</job_file>\n      <work_directory>/tmp/asterstudy_workdir_unpack/unpack-unpack-TM1613-&#x427;&#x442;-30-213713.266</work_directory>\n      <result_directory>/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files/KirshBadMesh/Result-Stage_1</result_directory>\n      <files>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files/KirshBadMesh/Result-Stage_1/KirshBadMesh_Stage_1.comm</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files/KirshBadMesh/Result-Stage_1/_ExportedFromSalomeObject_0_1_2_6.med</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files/KirshBadMesh/Result-Stage_1/export</in_file>\n        <out_file>resKirshBad.rmed</out_file>\n        <out_file>message</out_file>\n        <out_file>base-stage1</out_file>\n      </files>\n      <resource_params>\n        <name>localhost</name>\n        <nb_proc>1</nb_proc>\n        <nb_node>1</nb_node>\n      </resource_params>\n      <maximum_duration>00:15:00</maximum_duration>\n      <wckey>P10WB:ASTER</wckey>\n    </user_part>\n    <run_part>\n      <job_state>FINISHED</job_state>\n      <job_reference>0</job_reference>\n    </run_part>\n  </job>\n</jobs>\n"
+          },
+          "resstate": 16
+        },
+        "uid": 1
+      },
+      {
+        "name": "Stage_1",
+        "text": "mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=2)\n\nmodel = AFFE_MODELE(AFFE=_F(MODELISATION=('D_PLAN', ), PHENOMENE='MECANIQUE', TOUT='OUI'), MAILLAGE=mesh)\n\nmater = DEFI_MATERIAU(ELAS=_F(E=210000.0, NU=0.3))\n\nmaterfl = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ), TOUT='OUI'), MODELE=model)\n\nmecabc = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0, DY=0.0, GROUP_MA=('Fixed', )), MODELE=model)\n\nmecach = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load', ), PRES=-100.0))\n\nresult = MECA_STATIQUE(CHAM_MATER=materfl, EXCIT=(_F(CHARGE=mecabc), _F(CHARGE=mecach)), MODELE=model)\n\nresult = CALC_CHAMP(reuse=result, CRITERES=('SIEQ_ELGA', 'SIEQ_ELNO', 'SIEQ_NOEU'), DEFORMATION=('EPSI_ELGA', 'EPSI_ELNO', 'EPSI_NOEU'), RESULTAT=result)\n\nIMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=result), UNITE=3)",
+        "files": [
+          {
+            "handle": 2,
+            "filename": "0:1:2:7",
+            "attr": 1
+          },
+          {
+            "handle": 3,
+            "filename": "/home/unpack/salome_meca/Projects/Kurs/Linear/resKirshGood.rmed",
+            "attr": 2
+          }
+        ],
+        "result": {
+          "job": {
+            "jobid": "1",
+            "mode": "Interactive",
+            "name": "KirshGoodMesh_Stage_1",
+            "server": "localhost",
+            "memory": 2048,
+            "time": "00:15:00",
+            "version": "stable",
+            "startTime": "\u0427\u0442 30 \u043d\u043e\u044f 2023 21:45:44",
+            "endTime": "\u0427\u0442 30 \u043d\u043e\u044f 2023 21:45:55",
+            "folder": "/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files",
+            "wckey": "P10WB:ASTER",
+            "dumpString": "<?xml version=\"1.0\"?>\n<!--SALOME Launcher job-->\n<jobs>\n  <job type=\"command_salome\" name=\"KirshGoodMesh_Stage_1\">\n    <user_part>\n      <job_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files/KirshGoodMesh/Result-Stage_1/launcher_script</job_file>\n      <work_directory>/tmp/asterstudy_workdir_unpack/unpack-unpack-TM1613-&#x427;&#x442;-30-214544.536</work_directory>\n      <result_directory>/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files/KirshGoodMesh/Result-Stage_1</result_directory>\n      <files>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files/KirshGoodMesh/Result-Stage_1/KirshGoodMesh_Stage_1.comm</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files/KirshGoodMesh/Result-Stage_1/_ExportedFromSalomeObject_0_1_2_7.med</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Kirsh_Files/KirshGoodMesh/Result-Stage_1/export</in_file>\n        <out_file>resKirshGood.rmed</out_file>\n        <out_file>message</out_file>\n        <out_file>base-stage1</out_file>\n      </files>\n      <resource_params>\n        <name>localhost</name>\n        <nb_proc>1</nb_proc>\n        <nb_node>1</nb_node>\n      </resource_params>\n      <maximum_duration>00:15:00</maximum_duration>\n      <wckey>P10WB:ASTER</wckey>\n    </user_part>\n    <run_part>\n      <job_state>FINISHED</job_state>\n      <job_reference>0</job_reference>\n    </run_part>\n  </job>\n</jobs>\n"
+          },
+          "resstate": 16
+        },
+        "uid": 2,
+        "baseFolder": "Result-Stage_1"
+      }
+    ],
+    "aster": "stable",
+    "versionMajor": 14,
+    "versionMinor": 4
+  },
+  "minor": 10
+}
