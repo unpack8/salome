@@ -1,0 +1,332 @@
+{
+  "history": {
+    "cases": [
+      {
+        "name": "Constant_Horizontal",
+        "stages": [
+          1
+        ],
+        "baseFolder": "Constant_Horizontal"
+      },
+      {
+        "name": "Scaling_Horizontal",
+        "stages": [
+          2
+        ],
+        "baseFolder": "Scaling_Horizontal"
+      },
+      {
+        "name": "Constant_Vertical",
+        "stages": [
+          3
+        ],
+        "baseFolder": "Constant_Vertical"
+      },
+      {
+        "name": "Scaling_Vertical",
+        "stages": [
+          4
+        ],
+        "baseFolder": "Scaling_Vertical"
+      },
+      {
+        "name": "Constant_Right",
+        "stages": [
+          5
+        ],
+        "baseFolder": "Constant_Right"
+      },
+      {
+        "name": "Scaling_Right",
+        "stages": [
+          6
+        ],
+        "baseFolder": "Scaling_Right"
+      },
+      {
+        "name": "Constant_Left",
+        "stages": [
+          7
+        ],
+        "baseFolder": "Constant_Left"
+      },
+      {
+        "name": "Scaling_Left",
+        "stages": [
+          8
+        ]
+      },
+      {
+        "name": "CurrentCase",
+        "stages": [
+          8
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "name": "Stage_1",
+        "text": "mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=20)\n\nmesh = MODI_MAILLAGE(reuse=mesh, MAILLAGE=mesh, ORIE_PEAU_2D=_F(GROUP_MA=('Load_Vertical', )))\n\nmodel = AFFE_MODELE(AFFE=_F(MODELISATION=('D_PLAN', ), PHENOMENE='MECANIQUE', TOUT='OUI'), MAILLAGE=mesh)\n\nmater = DEFI_MATERIAU(ELAS=_F(E=210000.0, NU=0.3))\n\nmaterfl = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ), TOUT='OUI'), MODELE=model)\n\nscRight = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 0.0, 200.0, 10.0))\n\nscLeft = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 10.0, 200.0, 0.0))\n\nmecabc = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0, DY=0.0, GROUP_MA=('Fixed', )), MODELE=model)\n\nright = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scRight))\n\nleft = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scLeft))\n\nvertical = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=10.0))\n\nhoriz = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Horizontal', ), PRES=-10.0))\n\nresult = MECA_STATIQUE(CHAM_MATER=materfl, EXCIT=(_F(CHARGE=mecabc), _F(CHARGE=horiz)), MODELE=model)\n\nresult = CALC_CHAMP(reuse=result, CRITERES=('SIEQ_ELGA', 'SIEQ_ELNO', 'SIEQ_NOEU'), DEFORMATION=('EPSI_ELGA', 'EPSI_ELNO', 'EPSI_NOEU'), RESULTAT=result)\n\nIMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=result), UNITE=2)",
+        "files": [
+          {
+            "handle": 20,
+            "filename": "0:1:2:3",
+            "attr": 1
+          },
+          {
+            "handle": 2,
+            "filename": "/home/unpack/salome_meca/Projects/Kurs/Linear/resConstantHorizontal.rmed",
+            "attr": 2
+          }
+        ],
+        "result": {
+          "job": {
+            "jobid": "1",
+            "mode": "Interactive",
+            "name": "Constant_Horizontal_Stage_1",
+            "server": "localhost",
+            "memory": 2048,
+            "time": "00:15:00",
+            "version": "stable",
+            "startTime": "\u0421\u0431 16 \u0434\u0435\u043a 2023 23:15:34",
+            "endTime": "\u0421\u0431 16 \u0434\u0435\u043a 2023 23:15:39",
+            "folder": "/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files",
+            "wckey": "P10WB:ASTER",
+            "dumpString": "<?xml version=\"1.0\"?>\n<!--SALOME Launcher job-->\n<jobs>\n  <job type=\"command_salome\" name=\"Constant_Horizontal_Stage_1\">\n    <user_part>\n      <job_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Horizontal/Result-Stage_1/launcher_script</job_file>\n      <work_directory>/tmp/asterstudy_workdir_unpack/unpack-unpack-TM1613-&#x421;&#x431;-16-231534.229</work_directory>\n      <result_directory>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Horizontal/Result-Stage_1</result_directory>\n      <files>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Horizontal/Result-Stage_1/Constant_Horizontal_Stage_1.comm</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Horizontal/Result-Stage_1/_ExportedFromSalomeObject_0_1_2_3.med</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Horizontal/Result-Stage_1/export</in_file>\n        <out_file>resConstantHorizontal.rmed</out_file>\n        <out_file>message</out_file>\n        <out_file>base-stage1</out_file>\n      </files>\n      <resource_params>\n        <name>localhost</name>\n        <nb_proc>1</nb_proc>\n        <nb_node>1</nb_node>\n      </resource_params>\n      <maximum_duration>00:15:00</maximum_duration>\n      <wckey>P10WB:ASTER</wckey>\n    </user_part>\n    <run_part>\n      <job_state>FINISHED</job_state>\n      <job_reference>0</job_reference>\n    </run_part>\n  </job>\n</jobs>\n"
+          },
+          "resstate": 16
+        },
+        "uid": 1
+      },
+      {
+        "name": "Stage_1",
+        "text": "mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=3)\n\nmesh = MODI_MAILLAGE(reuse=mesh, MAILLAGE=mesh, ORIE_PEAU_2D=_F(GROUP_MA=('Load_Vertical', )))\n\nmodel = AFFE_MODELE(AFFE=_F(MODELISATION=('D_PLAN', ), PHENOMENE='MECANIQUE', TOUT='OUI'), MAILLAGE=mesh)\n\nmater = DEFI_MATERIAU(ELAS=_F(E=210000.0, NU=0.3))\n\nmaterfl = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ), TOUT='OUI'), MODELE=model)\n\nscRight = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 0.0, 200.0, 10.0))\n\nscLeft = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 10.0, 200.0, 0.0))\n\nmecabc = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0, DY=0.0, GROUP_MA=('Fixed', )), MODELE=model)\n\nright = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scRight))\n\nleft = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scLeft))\n\nvertical = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=10.0))\n\nhoriz = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Horizontal', ), PRES=-10.0))\n\nresult = MECA_STATIQUE(CHAM_MATER=materfl, EXCIT=(_F(CHARGE=mecabc), _F(CHARGE=horiz)), MODELE=model)\n\nresult = CALC_CHAMP(reuse=result, CRITERES=('SIEQ_ELGA', 'SIEQ_ELNO', 'SIEQ_NOEU'), DEFORMATION=('EPSI_ELGA', 'EPSI_ELNO', 'EPSI_NOEU'), RESULTAT=result)\n\nIMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=result), UNITE=80)",
+        "files": [
+          {
+            "handle": 3,
+            "filename": "0:1:2:4",
+            "attr": 1
+          },
+          {
+            "handle": 80,
+            "filename": "/home/unpack/salome_meca/Projects/Kurs/Linear/resScalingHorizontal.rmed",
+            "attr": 2
+          }
+        ],
+        "result": {
+          "job": {
+            "jobid": "2",
+            "mode": "Interactive",
+            "name": "Scaling_Horizontal_Stage_1",
+            "server": "localhost",
+            "memory": 2048,
+            "time": "00:15:00",
+            "version": "stable",
+            "startTime": "\u0421\u0431 16 \u0434\u0435\u043a 2023 23:39:00",
+            "endTime": "\u0421\u0431 16 \u0434\u0435\u043a 2023 23:39:09",
+            "folder": "/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files",
+            "wckey": "P10WB:ASTER",
+            "dumpString": "<?xml version=\"1.0\"?>\n<!--SALOME Launcher job-->\n<jobs>\n  <job type=\"command_salome\" name=\"Scaling_Horizontal_Stage_1\">\n    <user_part>\n      <job_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Horizontal/Result-Stage_1/launcher_script</job_file>\n      <work_directory>/tmp/asterstudy_workdir_unpack/unpack-unpack-TM1613-&#x421;&#x431;-16-233900.271</work_directory>\n      <result_directory>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Horizontal/Result-Stage_1</result_directory>\n      <files>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Horizontal/Result-Stage_1/Scaling_Horizontal_Stage_1.comm</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Horizontal/Result-Stage_1/_ExportedFromSalomeObject_0_1_2_4.med</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Horizontal/Result-Stage_1/export</in_file>\n        <out_file>resScalingHorizontal.rmed</out_file>\n        <out_file>message</out_file>\n        <out_file>base-stage1</out_file>\n      </files>\n      <resource_params>\n        <name>localhost</name>\n        <nb_proc>1</nb_proc>\n        <nb_node>1</nb_node>\n      </resource_params>\n      <maximum_duration>00:15:00</maximum_duration>\n      <wckey>P10WB:ASTER</wckey>\n    </user_part>\n    <run_part>\n      <job_state>FINISHED</job_state>\n      <job_reference>0</job_reference>\n    </run_part>\n  </job>\n</jobs>\n"
+          },
+          "resstate": 16
+        },
+        "uid": 2
+      },
+      {
+        "name": "Stage_1",
+        "text": "mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=20)\n\nmesh = MODI_MAILLAGE(reuse=mesh, MAILLAGE=mesh, ORIE_PEAU_2D=_F(GROUP_MA=('Load_Vertical', )))\n\nmodel = AFFE_MODELE(AFFE=_F(MODELISATION=('D_PLAN', ), PHENOMENE='MECANIQUE', TOUT='OUI'), MAILLAGE=mesh)\n\nmater = DEFI_MATERIAU(ELAS=_F(E=210000.0, NU=0.3))\n\nmaterfl = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ), TOUT='OUI'), MODELE=model)\n\nscRight = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 0.0, 200.0, 10.0))\n\nscLeft = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 10.0, 200.0, 0.0))\n\nmecabc = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0, DY=0.0, GROUP_MA=('Fixed', )), MODELE=model)\n\nright = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scRight))\n\nleft = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scLeft))\n\nvertical = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=10.0))\n\nhoriz = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Horizontal', ), PRES=-10.0))\n\nresult = MECA_STATIQUE(CHAM_MATER=materfl, EXCIT=(_F(CHARGE=mecabc), _F(CHARGE=vertical)), MODELE=model)\n\nresult = CALC_CHAMP(reuse=result, CRITERES=('SIEQ_ELGA', 'SIEQ_ELNO', 'SIEQ_NOEU'), DEFORMATION=('EPSI_ELGA', 'EPSI_ELNO', 'EPSI_NOEU'), RESULTAT=result)\n\nIMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=result), UNITE=2)",
+        "files": [
+          {
+            "handle": 20,
+            "filename": "0:1:2:3",
+            "attr": 1
+          },
+          {
+            "handle": 2,
+            "filename": "/home/unpack/salome_meca/Projects/Kurs/Linear/resConstantVertical.rmed",
+            "attr": 2
+          }
+        ],
+        "result": {
+          "job": {
+            "jobid": "3",
+            "mode": "Interactive",
+            "name": "Constant_Vertical_Stage_1",
+            "server": "localhost",
+            "memory": 2048,
+            "time": "00:15:00",
+            "version": "stable",
+            "startTime": "\u0421\u0431 16 \u0434\u0435\u043a 2023 23:43:56",
+            "endTime": "\u0421\u0431 16 \u0434\u0435\u043a 2023 23:44:02",
+            "folder": "/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files",
+            "wckey": "P10WB:ASTER",
+            "dumpString": "<?xml version=\"1.0\"?>\n<!--SALOME Launcher job-->\n<jobs>\n  <job type=\"command_salome\" name=\"Constant_Vertical_Stage_1\">\n    <user_part>\n      <job_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Vertical/Result-Stage_1/launcher_script</job_file>\n      <work_directory>/tmp/asterstudy_workdir_unpack/unpack-unpack-TM1613-&#x421;&#x431;-16-234356.749</work_directory>\n      <result_directory>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Vertical/Result-Stage_1</result_directory>\n      <files>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Vertical/Result-Stage_1/Constant_Vertical_Stage_1.comm</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Vertical/Result-Stage_1/_ExportedFromSalomeObject_0_1_2_3.med</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Vertical/Result-Stage_1/export</in_file>\n        <out_file>resConstantVertical.rmed</out_file>\n        <out_file>message</out_file>\n        <out_file>base-stage1</out_file>\n      </files>\n      <resource_params>\n        <name>localhost</name>\n        <nb_proc>1</nb_proc>\n        <nb_node>1</nb_node>\n      </resource_params>\n      <maximum_duration>00:15:00</maximum_duration>\n      <wckey>P10WB:ASTER</wckey>\n    </user_part>\n    <run_part>\n      <job_state>FINISHED</job_state>\n      <job_reference>0</job_reference>\n    </run_part>\n  </job>\n</jobs>\n"
+          },
+          "resstate": 16
+        },
+        "uid": 3
+      },
+      {
+        "name": "Stage_1",
+        "text": "mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=3)\n\nmesh = MODI_MAILLAGE(reuse=mesh, MAILLAGE=mesh, ORIE_PEAU_2D=_F(GROUP_MA=('Load_Vertical', )))\n\nmodel = AFFE_MODELE(AFFE=_F(MODELISATION=('D_PLAN', ), PHENOMENE='MECANIQUE', TOUT='OUI'), MAILLAGE=mesh)\n\nmater = DEFI_MATERIAU(ELAS=_F(E=210000.0, NU=0.3))\n\nmaterfl = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ), TOUT='OUI'), MODELE=model)\n\nscRight = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 0.0, 200.0, 10.0))\n\nscLeft = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 10.0, 200.0, 0.0))\n\nmecabc = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0, DY=0.0, GROUP_MA=('Fixed', )), MODELE=model)\n\nright = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scRight))\n\nleft = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scLeft))\n\nvertical = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=10.0))\n\nhoriz = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Horizontal', ), PRES=-10.0))\n\nresult = MECA_STATIQUE(CHAM_MATER=materfl, EXCIT=(_F(CHARGE=mecabc), _F(CHARGE=vertical)), MODELE=model)\n\nresult = CALC_CHAMP(reuse=result, CRITERES=('SIEQ_ELGA', 'SIEQ_ELNO', 'SIEQ_NOEU'), DEFORMATION=('EPSI_ELGA', 'EPSI_ELNO', 'EPSI_NOEU'), RESULTAT=result)\n\nIMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=result), UNITE=80)",
+        "files": [
+          {
+            "handle": 3,
+            "filename": "0:1:2:4",
+            "attr": 1
+          },
+          {
+            "handle": 80,
+            "filename": "/home/unpack/salome_meca/Projects/Kurs/Linear/resScalingVertical.rmed",
+            "attr": 2
+          }
+        ],
+        "result": {
+          "job": {
+            "jobid": "4",
+            "mode": "Interactive",
+            "name": "Scaling_Vertical_Stage_1",
+            "server": "localhost",
+            "memory": 2048,
+            "time": "00:15:00",
+            "version": "stable",
+            "startTime": "\u0421\u0431 16 \u0434\u0435\u043a 2023 23:49:58",
+            "endTime": "\u0421\u0431 16 \u0434\u0435\u043a 2023 23:50:24",
+            "folder": "/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files",
+            "wckey": "P10WB:ASTER",
+            "dumpString": "<?xml version=\"1.0\"?>\n<!--SALOME Launcher job-->\n<jobs>\n  <job type=\"command_salome\" name=\"Scaling_Vertical_Stage_1\">\n    <user_part>\n      <job_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Vertical/Result-Stage_1/launcher_script</job_file>\n      <work_directory>/tmp/asterstudy_workdir_unpack/unpack-unpack-TM1613-&#x421;&#x431;-16-234958.890</work_directory>\n      <result_directory>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Vertical/Result-Stage_1</result_directory>\n      <files>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Vertical/Result-Stage_1/Scaling_Vertical_Stage_1.comm</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Vertical/Result-Stage_1/_ExportedFromSalomeObject_0_1_2_4.med</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Vertical/Result-Stage_1/export</in_file>\n        <out_file>resScalingVertical.rmed</out_file>\n        <out_file>message</out_file>\n        <out_file>base-stage1</out_file>\n      </files>\n      <resource_params>\n        <name>localhost</name>\n        <nb_proc>1</nb_proc>\n        <nb_node>1</nb_node>\n      </resource_params>\n      <maximum_duration>00:15:00</maximum_duration>\n      <wckey>P10WB:ASTER</wckey>\n    </user_part>\n    <run_part>\n      <job_state>FINISHED</job_state>\n      <job_reference>0</job_reference>\n    </run_part>\n  </job>\n</jobs>\n"
+          },
+          "resstate": 16
+        },
+        "uid": 4
+      },
+      {
+        "name": "Stage_1",
+        "text": "mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=20)\n\nmesh = MODI_MAILLAGE(reuse=mesh, MAILLAGE=mesh, ORIE_PEAU_2D=_F(GROUP_MA=('Load_Vertical', )))\n\nmodel = AFFE_MODELE(AFFE=_F(MODELISATION=('D_PLAN', ), PHENOMENE='MECANIQUE', TOUT='OUI'), MAILLAGE=mesh)\n\nmater = DEFI_MATERIAU(ELAS=_F(E=210000.0, NU=0.3))\n\nmaterfl = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ), TOUT='OUI'), MODELE=model)\n\nscRight = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 0.0, 200.0, 10.0))\n\nscLeft = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 10.0, 200.0, 0.0))\n\nmecabc = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0, DY=0.0, GROUP_MA=('Fixed', )), MODELE=model)\n\nright = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scRight))\n\nleft = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scLeft))\n\nvertical = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=10.0))\n\nhoriz = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Horizontal', ), PRES=-10.0))\n\nresult = MECA_STATIQUE(CHAM_MATER=materfl, EXCIT=(_F(CHARGE=mecabc), _F(CHARGE=right)), MODELE=model)\n\nresult = CALC_CHAMP(reuse=result, CRITERES=('SIEQ_ELGA', 'SIEQ_ELNO', 'SIEQ_NOEU'), DEFORMATION=('EPSI_ELGA', 'EPSI_ELNO', 'EPSI_NOEU'), RESULTAT=result)\n\nIMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=result), UNITE=2)",
+        "files": [
+          {
+            "handle": 20,
+            "filename": "0:1:2:3",
+            "attr": 1
+          },
+          {
+            "handle": 2,
+            "filename": "/home/unpack/salome_meca/Projects/Kurs/Linear/resConstantRight.rmed",
+            "attr": 2
+          }
+        ],
+        "result": {
+          "job": {
+            "jobid": "5",
+            "mode": "Interactive",
+            "name": "Constant_Right_Stage_1",
+            "server": "localhost",
+            "memory": 2048,
+            "time": "00:15:00",
+            "version": "stable",
+            "startTime": "\u0412\u0441 17 \u0434\u0435\u043a 2023 00:35:11",
+            "endTime": "\u0412\u0441 17 \u0434\u0435\u043a 2023 00:35:16",
+            "folder": "/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files",
+            "wckey": "P10WB:ASTER",
+            "dumpString": "<?xml version=\"1.0\"?>\n<!--SALOME Launcher job-->\n<jobs>\n  <job type=\"command_salome\" name=\"Constant_Right_Stage_1\">\n    <user_part>\n      <job_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Right/Result-Stage_1/launcher_script</job_file>\n      <work_directory>/tmp/asterstudy_workdir_unpack/unpack-unpack-TM1613-&#x412;&#x441;-17-003510.991</work_directory>\n      <result_directory>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Right/Result-Stage_1</result_directory>\n      <files>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Right/Result-Stage_1/Constant_Right_Stage_1.comm</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Right/Result-Stage_1/_ExportedFromSalomeObject_0_1_2_3.med</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Right/Result-Stage_1/export</in_file>\n        <out_file>resConstantRight.rmed</out_file>\n        <out_file>message</out_file>\n        <out_file>base-stage1</out_file>\n      </files>\n      <resource_params>\n        <name>localhost</name>\n        <nb_proc>1</nb_proc>\n        <nb_node>1</nb_node>\n      </resource_params>\n      <maximum_duration>00:15:00</maximum_duration>\n      <wckey>P10WB:ASTER</wckey>\n    </user_part>\n    <run_part>\n      <job_state>FINISHED</job_state>\n      <job_reference>0</job_reference>\n    </run_part>\n  </job>\n</jobs>\n"
+          },
+          "resstate": 16
+        },
+        "uid": 5
+      },
+      {
+        "name": "Stage_1",
+        "text": "mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=3)\n\nmesh = MODI_MAILLAGE(reuse=mesh, MAILLAGE=mesh, ORIE_PEAU_2D=_F(GROUP_MA=('Load_Vertical', )))\n\nmodel = AFFE_MODELE(AFFE=_F(MODELISATION=('D_PLAN', ), PHENOMENE='MECANIQUE', TOUT='OUI'), MAILLAGE=mesh)\n\nmater = DEFI_MATERIAU(ELAS=_F(E=210000.0, NU=0.3))\n\nmaterfl = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ), TOUT='OUI'), MODELE=model)\n\nscRight = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 0.0, 200.0, 10.0))\n\nscLeft = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 10.0, 200.0, 0.0))\n\nmecabc = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0, DY=0.0, GROUP_MA=('Fixed', )), MODELE=model)\n\nright = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scRight))\n\nleft = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scLeft))\n\nvertical = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=10.0))\n\nhoriz = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Horizontal', ), PRES=-10.0))\n\nresult = MECA_STATIQUE(CHAM_MATER=materfl, EXCIT=(_F(CHARGE=mecabc), _F(CHARGE=right)), MODELE=model)\n\nresult = CALC_CHAMP(reuse=result, CRITERES=('SIEQ_ELGA', 'SIEQ_ELNO', 'SIEQ_NOEU'), DEFORMATION=('EPSI_ELGA', 'EPSI_ELNO', 'EPSI_NOEU'), RESULTAT=result)\n\nIMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=result), UNITE=80)",
+        "files": [
+          {
+            "handle": 3,
+            "filename": "0:1:2:4",
+            "attr": 1
+          },
+          {
+            "handle": 80,
+            "filename": "/home/unpack/salome_meca/Projects/Kurs/Linear/resScalingRight.rmed",
+            "attr": 2
+          }
+        ],
+        "result": {
+          "job": {
+            "jobid": "6",
+            "mode": "Interactive",
+            "name": "Scaling_Right_Stage_1",
+            "server": "localhost",
+            "memory": 2048,
+            "time": "00:15:00",
+            "version": "stable",
+            "startTime": "\u0412\u0441 17 \u0434\u0435\u043a 2023 00:52:58",
+            "endTime": "\u0412\u0441 17 \u0434\u0435\u043a 2023 00:53:03",
+            "folder": "/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files",
+            "wckey": "P10WB:ASTER",
+            "dumpString": "<?xml version=\"1.0\"?>\n<!--SALOME Launcher job-->\n<jobs>\n  <job type=\"command_salome\" name=\"Scaling_Right_Stage_1\">\n    <user_part>\n      <job_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Right/Result-Stage_1/launcher_script</job_file>\n      <work_directory>/tmp/asterstudy_workdir_unpack/unpack-unpack-TM1613-&#x412;&#x441;-17-005258.205</work_directory>\n      <result_directory>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Right/Result-Stage_1</result_directory>\n      <files>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Right/Result-Stage_1/Scaling_Right_Stage_1.comm</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Right/Result-Stage_1/_ExportedFromSalomeObject_0_1_2_4.med</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Scaling_Right/Result-Stage_1/export</in_file>\n        <out_file>resScalingRight.rmed</out_file>\n        <out_file>message</out_file>\n        <out_file>base-stage1</out_file>\n      </files>\n      <resource_params>\n        <name>localhost</name>\n        <nb_proc>1</nb_proc>\n        <nb_node>1</nb_node>\n      </resource_params>\n      <maximum_duration>00:15:00</maximum_duration>\n      <wckey>P10WB:ASTER</wckey>\n    </user_part>\n    <run_part>\n      <job_state>FINISHED</job_state>\n      <job_reference>0</job_reference>\n    </run_part>\n  </job>\n</jobs>\n"
+          },
+          "resstate": 16
+        },
+        "uid": 6
+      },
+      {
+        "name": "Stage_1",
+        "text": "mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=20)\n\nmesh = MODI_MAILLAGE(reuse=mesh, MAILLAGE=mesh, ORIE_PEAU_2D=_F(GROUP_MA=('Load_Vertical', )))\n\nmodel = AFFE_MODELE(AFFE=_F(MODELISATION=('D_PLAN', ), PHENOMENE='MECANIQUE', TOUT='OUI'), MAILLAGE=mesh)\n\nmater = DEFI_MATERIAU(ELAS=_F(E=210000.0, NU=0.3))\n\nmaterfl = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ), TOUT='OUI'), MODELE=model)\n\nscRight = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 0.0, 200.0, 10.0))\n\nscLeft = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 10.0, 200.0, 0.0))\n\nmecabc = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0, DY=0.0, GROUP_MA=('Fixed', )), MODELE=model)\n\nright = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scRight))\n\nleft = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scLeft))\n\nvertical = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=10.0))\n\nhoriz = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Horizontal', ), PRES=-10.0))\n\nresult = MECA_STATIQUE(CHAM_MATER=materfl, EXCIT=(_F(CHARGE=mecabc), _F(CHARGE=left)), MODELE=model)\n\nresult = CALC_CHAMP(reuse=result, CRITERES=('SIEQ_ELGA', 'SIEQ_ELNO', 'SIEQ_NOEU'), DEFORMATION=('EPSI_ELGA', 'EPSI_ELNO', 'EPSI_NOEU'), RESULTAT=result)\n\nIMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=result), UNITE=2)",
+        "files": [
+          {
+            "handle": 20,
+            "filename": "0:1:2:3",
+            "attr": 1
+          },
+          {
+            "handle": 2,
+            "filename": "/home/unpack/salome_meca/Projects/Kurs/Linear/resConstantLeft.rmed",
+            "attr": 2
+          }
+        ],
+        "result": {
+          "job": {
+            "jobid": "7",
+            "mode": "Interactive",
+            "name": "Constant_Left_Stage_1",
+            "server": "localhost",
+            "memory": 2048,
+            "time": "00:15:00",
+            "version": "stable",
+            "startTime": "\u0412\u0441 17 \u0434\u0435\u043a 2023 00:55:53",
+            "endTime": "\u0412\u0441 17 \u0434\u0435\u043a 2023 00:56:02",
+            "folder": "/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files",
+            "wckey": "P10WB:ASTER",
+            "dumpString": "<?xml version=\"1.0\"?>\n<!--SALOME Launcher job-->\n<jobs>\n  <job type=\"command_salome\" name=\"Constant_Left_Stage_1\">\n    <user_part>\n      <job_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Left/Result-Stage_1/launcher_script</job_file>\n      <work_directory>/tmp/asterstudy_workdir_unpack/unpack-unpack-TM1613-&#x412;&#x441;-17-005552.920</work_directory>\n      <result_directory>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Left/Result-Stage_1</result_directory>\n      <files>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Left/Result-Stage_1/Constant_Left_Stage_1.comm</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Left/Result-Stage_1/_ExportedFromSalomeObject_0_1_2_3.med</in_file>\n        <in_file>/home/unpack/salome_meca/Projects/Kurs/Linear/Solid_Files/Constant_Left/Result-Stage_1/export</in_file>\n        <out_file>resConstantLeft.rmed</out_file>\n        <out_file>message</out_file>\n        <out_file>base-stage1</out_file>\n      </files>\n      <resource_params>\n        <name>localhost</name>\n        <nb_proc>1</nb_proc>\n        <nb_node>1</nb_node>\n      </resource_params>\n      <maximum_duration>00:15:00</maximum_duration>\n      <wckey>P10WB:ASTER</wckey>\n    </user_part>\n    <run_part>\n      <job_state>FINISHED</job_state>\n      <job_reference>0</job_reference>\n    </run_part>\n  </job>\n</jobs>\n"
+          },
+          "resstate": 16
+        },
+        "uid": 7
+      },
+      {
+        "name": "Stage_1",
+        "text": "mesh = LIRE_MAILLAGE(FORMAT='MED', UNITE=3)\n\nmesh = MODI_MAILLAGE(reuse=mesh, MAILLAGE=mesh, ORIE_PEAU_2D=_F(GROUP_MA=('Load_Vertical', )))\n\nmodel = AFFE_MODELE(AFFE=_F(MODELISATION=('D_PLAN', ), PHENOMENE='MECANIQUE', TOUT='OUI'), MAILLAGE=mesh)\n\nmater = DEFI_MATERIAU(ELAS=_F(E=210000.0, NU=0.3))\n\nmaterfl = AFFE_MATERIAU(AFFE=_F(MATER=(mater, ), TOUT='OUI'), MODELE=model)\n\nscRight = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 0.0, 200.0, 10.0))\n\nscLeft = DEFI_FONCTION(NOM_PARA='X', PROL_DROITE='LINEAIRE', PROL_GAUCHE='LINEAIRE', VALE=(0.0, 10.0, 200.0, 0.0))\n\nmecabc = AFFE_CHAR_MECA(DDL_IMPO=_F(DX=0.0, DY=0.0, GROUP_MA=('Fixed', )), MODELE=model)\n\nright = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scRight))\n\nleft = AFFE_CHAR_MECA_F(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=scLeft))\n\nvertical = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Vertical', ), PRES=10.0))\n\nhoriz = AFFE_CHAR_MECA(MODELE=model, PRES_REP=_F(GROUP_MA=('Load_Horizontal', ), PRES=-10.0))\n\nresult = MECA_STATIQUE(CHAM_MATER=materfl, EXCIT=(_F(CHARGE=mecabc), _F(CHARGE=left)), MODELE=model)\n\nresult = CALC_CHAMP(reuse=result, CRITERES=('SIEQ_ELGA', 'SIEQ_ELNO', 'SIEQ_NOEU'), DEFORMATION=('EPSI_ELGA', 'EPSI_ELNO', 'EPSI_NOEU'), RESULTAT=result)\n\nIMPR_RESU(FORMAT='MED', RESU=_F(RESULTAT=result), UNITE=80)",
+        "files": [
+          {
+            "handle": 3,
+            "filename": "0:1:2:4",
+            "attr": 1
+          },
+          {
+            "handle": 80,
+            "filename": "/home/unpack/salome_meca/Projects/Kurs/Linear/resScalingLeft.rmed",
+            "attr": 2
+          }
+        ],
+        "result": {
+          "job": {},
+          "resstate": 1
+        },
+        "uid": 8
+      }
+    ],
+    "aster": "stable",
+    "versionMajor": 14,
+    "versionMinor": 4
+  },
+  "minor": 10
+}
