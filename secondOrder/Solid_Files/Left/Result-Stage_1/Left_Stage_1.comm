@@ -29,7 +29,7 @@ func = DEFI_FONCTION(identifier='5:1',
                      NOM_PARA='X',
                      PROL_DROITE='LINEAIRE',
                      PROL_GAUCHE='LINEAIRE',
-                     VALE=(0.0, 100.0, 100.0, 0.0))
+                     VALE=(0.0, 10.0, 100.0, 0.0))
 
 mecabc = AFFE_CHAR_MECA(identifier='6:1',
                         DDL_IMPO=_F(DX=0.0,
@@ -40,7 +40,7 @@ mecabc = AFFE_CHAR_MECA(identifier='6:1',
 mecach = AFFE_CHAR_MECA(identifier='7:1',
                         MODELE=model,
                         PRES_REP=_F(GROUP_MA=('Load_Vertical', ),
-                                    PRES=100.0))
+                                    PRES=10.0))
 
 load = AFFE_CHAR_MECA_F(identifier='8:1',
                         MODELE=model,
