@@ -1,0 +1,4 @@
+#!/bin/bash
+export ASTER_TMPDIR=/tmp
+wrap=$(which xterm && echo ' -e ')
+as_run --num_job=2799-0003-unpack-TM1613 export 2> ./logs/stderr_command_salome.log
